@@ -17,6 +17,12 @@ if [ "$#" -ge "1" ];then
     rust_version="$1"
 fi
 
+# Make TiDB available on ARM arch
+pkg_arch="amd64"
+if [ "$(uname -m)" = "aarch64" ];then
+    pkg_arch="arm64"
+fi
+
 cat <<EOT
 FROM centos:7.6.1810 as builder
 RUN yum clean all && \
@@ -34,6 +40,7 @@ RUN yum clean all && \
 	yum install -y tar wget git which file unzip python-pip openssl-devel \
 		make cmake3 gcc gcc-c++ libstdc++-static pkg-config psmisc gdb \
 		libdwarf-devel elfutils-libelf-devel elfutils-devel binutils-devel \
+    clang clang-devel \
         dwz && \
 	yum clean all
 EOT
@@ -49,12 +56,12 @@ EOT
 
 # Install golang
 cat << EOT
-RUN wget https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz
-RUN tar -xf go1.13.5.linux-amd64.tar.gz
+RUN wget https://dl.google.com/go/go1.13.5.linux-${pkg_arch}.tar.gz
+RUN tar -xf go1.13.5.linux-${pkg_arch}.tar.gz
 RUN mv go /usr/local
 ENV PATH /usr/local/go/bin:\$PATH
 ENV GOROOT /usr/local/go
-RUN rm -f go1.13.5.linux-amd64.tar.gz
+RUN rm -f go1.13.5.linux-${pkg_arch}.tar.gz
 EOT
 
 # Install Rustup
