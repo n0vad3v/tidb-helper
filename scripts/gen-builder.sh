@@ -17,11 +17,8 @@ if [ "$#" -ge "1" ];then
     rust_version="$1"
 fi
 
-# Make TiDB available on ARM arch
-pkg_arch="amd64"
-if [ "$(uname -m)" = "aarch64" ];then
-    pkg_arch="arm64"
-fi
+# Make TiDB available on multiple arch
+pkg_arch=$2
 
 cat <<EOT
 FROM centos:7.6.1810 as builder

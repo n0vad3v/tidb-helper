@@ -2,6 +2,13 @@ ifdef TAG
 	VERSION = $(subst v,,$(TAG))
 endif
 
+define check_arch
+	ARCH="amd64"
+	@if [ "$(uname -m)" = "aarch64" ];then \
+	    ARCH="arm64" \
+	fi \
+endef
+
 PROJECT_TIDB=tidb
 PROJECT_TIKV=tikv
 PROJECT_PD=pd
@@ -95,7 +102,7 @@ docker: build-prepare $(ARTIFACT_DOCKER)
 
 docker-builder:
 ifeq ($(shell docker images -q $(BUILDER_IMAGE_BINARY)),)
-	bash ./scripts/gen-builder.sh $(shell cat $(TIKV_SOURCE)/rust-toolchain) | docker build -t $(BUILDER_IMAGE_BINARY) -f - .
+	bash ./scripts/gen-builder.sh $(shell cat $(TIKV_SOURCE)/rust-toolchain) $(ARCH) | docker build -t $(BUILDER_IMAGE_BINARY) -f - .
 endif
 
 .PHONY: rpm deb
