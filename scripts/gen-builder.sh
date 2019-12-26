@@ -19,14 +19,23 @@ fi
 
 # Make TiDB available on multiple arch
 pkg_arch=$2
-
-cat <<EOT
-FROM centos:7.6.1810 as builder
-RUN yum clean all && \
-    yum makecache && \
-    yum update -y && \
-    yum install -y epel-release
-EOT
+if [ pkg_arch = "aarch64"];then
+  cat <<EOT
+  FROM arm64v8/centos:7 as builder
+  RUN yum clean all && \
+      yum makecache && \
+      yum update -y && \
+      yum install -y epel-release
+  EOT
+else
+  cat <<EOT
+  FROM centos:7.6.1810 as builder
+  RUN yum clean all && \
+      yum makecache && \
+      yum update -y && \
+      yum install -y epel-release
+  EOT
+fi
 
 # Install the system dependencies
 # Attempt to clean and rebuild the cache to avoid 404s
@@ -37,11 +46,19 @@ RUN yum clean all && \
 	yum install -y tar wget git which file unzip python-pip openssl-devel \
 		make cmake3 gcc gcc-c++ libstdc++-static pkg-config psmisc gdb \
 		libdwarf-devel elfutils-libelf-devel elfutils-devel binutils-devel \
-    clang clang-devel \
         dwz && \
 	yum clean all
 EOT
 
+if [ pkg_arch = "aarch64"];then
+  cat <<EOT
+  RUN yum clean all && \
+      yum makecache && \
+  	yum update -y && \
+  	yum install -y clang clang-devel && \
+  	yum clean all
+  EOT
+fi
 
 # CentOS gives cmake 3 a weird binary name, so we link it to something more normal
 # This is required by many build scripts, including ours.
