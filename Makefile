@@ -2,14 +2,13 @@ ifdef TAG
 	VERSION = $(subst v,,$(TAG))
 endif
 
-define check_arch
-	ARCH="amd64"
-	I_ARCH="x86_64"
-	@if [ "$(uname -m)" = "aarch64" ];then \
-	    ARCH="arm64" \
-			I_ARCH="aarch64" \
-	fi \
-endef
+ifeq($(shell uname -m)，aarch64)
+	ARCH="arm64" # For download
+	I_ARCH="aarch64" # For build rpm
+else
+	ARCH="amd64" # For download
+	I_ARCH="x86_64" # For build rpm
+fi
 
 PROJECT_TIDB=tidb
 PROJECT_TIKV=tikv
