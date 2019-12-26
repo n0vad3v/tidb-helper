@@ -118,6 +118,7 @@ endif
 		-v $(tidb_path)/README.md:/root/rpmbuild/BUILD/README.md \
 		-v $(CURDIR)/${ARTIFACT_DIR}/rpm-spec:/root/rpmbuild/SPECS/tidb.spec \
 		-v $(CURDIR)/${ARTIFACT_DIR}:/root/rpmbuild/RPMS/x86_64/ \
+		-v $(CURDIR)/${ARTIFACT_DIR}:/root/rpmbuild/RPMS/aarch64/ \
 		$(BUILDER_IMAGE_RPM) rpmbuild -bb /root/rpmbuild/SPECS/tidb.spec
 	rm ${ARTIFACT_DIR}/rpm-spec
 
