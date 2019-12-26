@@ -4,8 +4,10 @@ endif
 
 define check_arch
 	ARCH="amd64"
+	I_ARCH="x86_64"
 	@if [ "$(uname -m)" = "aarch64" ];then \
 	    ARCH="arm64" \
+			I_ARCH="aarch64" \
 	fi \
 endef
 
@@ -124,7 +126,7 @@ endif
 		-v $(tidb_path)/LICENSE:/root/rpmbuild/BUILD/LICENSE \
 		-v $(tidb_path)/README.md:/root/rpmbuild/BUILD/README.md \
 		-v $(CURDIR)/${ARTIFACT_DIR}/rpm-spec:/root/rpmbuild/SPECS/tidb.spec \
-		-v $(CURDIR)/${ARTIFACT_DIR}:/root/rpmbuild/RPMS/$(ARCH)/ \
+		-v $(CURDIR)/${ARTIFACT_DIR}:/root/rpmbuild/RPMS/$(I_ARCH)/ \
 		$(BUILDER_IMAGE_RPM) rpmbuild -bb /root/rpmbuild/SPECS/tidb.spec
 	rm ${ARTIFACT_DIR}/rpm-spec
 

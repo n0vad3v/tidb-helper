@@ -20,22 +20,18 @@ fi
 # Make TiDB available on multiple arch
 pkg_arch=$2
 if [ pkg_arch = "aarch64"];then
-  cat <<EOT
-  FROM arm64v8/centos:7 as builder
-  RUN yum clean all && \
-      yum makecache && \
-      yum update -y && \
-      yum install -y epel-release
-  EOT
+  docker_image_name = "arm64v8/centos:7"
 else
-  cat <<EOT
-  FROM centos:7.6.1810 as builder
-  RUN yum clean all && \
-      yum makecache && \
-      yum update -y && \
-      yum install -y epel-release
-  EOT
+  docker_image_name = "centos:7.6.1810"
 fi
+
+cat <<EOT
+FROM ${docker_image_name} as builder
+RUN yum clean all && \
+    yum makecache && \
+    yum update -y && \
+    yum install -y epel-release
+EOT
 
 # Install the system dependencies
 # Attempt to clean and rebuild the cache to avoid 404s
@@ -52,8 +48,7 @@ EOT
 
 if [ pkg_arch = "aarch64"];then
   cat <<EOT
-  RUN yum clean all && \
-      yum makecache && \
+  RUN yum makecache && \
   	yum update -y && \
   	yum install -y clang clang-devel && \
   	yum clean all
