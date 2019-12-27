@@ -36,14 +36,10 @@ EOT
 # Install the system dependencies
 # Attempt to clean and rebuild the cache to avoid 404s
 cat <<EOT
-RUN yum clean all && \
-    yum makecache && \
-	yum update -y && \
-	yum install -y tar wget git which file unzip python-pip openssl-devel \
+RUN yum install -y tar wget git which file unzip python-pip openssl-devel \
 		make cmake3 gcc gcc-c++ libstdc++-static pkg-config psmisc gdb \
 		libdwarf-devel elfutils-libelf-devel elfutils-devel binutils-devel \
         dwz && \
-	yum clean all
 EOT
 
 if [ pkg_arch = "aarch64"];then

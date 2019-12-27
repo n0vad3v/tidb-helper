@@ -90,6 +90,7 @@ endif
 		-v $(realpath $(PD_SOURCE)):/build/pd \
 		-v $(CURDIR)/scripts/build.sh:/build.sh \
 		-v $(CURDIR)/${ARTIFACT_BINARY}:/out \
+		--env ROCKSDB_SYS_SSE=0
 		$(BUILDER_IMAGE_BINARY) /build.sh
 
 $(ARTIFACT_DOCKER): $(ARTIFACT_BINARY) $(ARTIFACT_DIR)

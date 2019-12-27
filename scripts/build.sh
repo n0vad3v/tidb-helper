@@ -4,12 +4,7 @@ set -e
 
 cd /build/tidb && make
 cd /build/pd && make
-
-if [ $1 = "aarch64" ]; then
-    cd /build/tikv && ROCKSDB_SYS_SSE=0 make dist_release
-else
-    cd /build/tikv && make dist_release
-fi
+cd /build/tikv && make dist_release
 
 
 cd /build/tidb/bin && cp tidb-server /out
