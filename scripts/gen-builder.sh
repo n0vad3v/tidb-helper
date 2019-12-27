@@ -44,11 +44,11 @@ EOT
 
 if [ pkg_arch = "aarch64"];then
   cat <<EOT
-  RUN yum makecache && \
-  	yum update -y && \
-  	yum install -y clang clang-devel && \
-  	yum clean all
-  EOT
+RUN yum makecache && \
+	yum update -y && \
+	yum install -y clang clang-devel && \
+	yum clean all
+EOT
 fi
 
 # CentOS gives cmake 3 a weird binary name, so we link it to something more normal
