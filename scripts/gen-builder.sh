@@ -44,12 +44,14 @@ EOT
 
 if [ "$pkg_arch" = "arm64" ];then
   cat <<EOT
-RUN yum makecache && \
-	yum update -y && \
-	yum install -y clang clang-devel && \
-	yum clean all
+RUN yum install -y clang clang-devel
 EOT
 fi
+
+# Clean YUM Cache
+cat <<EOT
+yum clean all
+EOT
 
 # CentOS gives cmake 3 a weird binary name, so we link it to something more normal
 # This is required by many build scripts, including ours.
