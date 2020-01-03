@@ -155,7 +155,6 @@ endif
 		-v $(realpath $(TIDB_CTL_SOURCE)):/build/tidb-ctl \
 		-v $(CURDIR)/scripts/build-tidb.sh:/build-tidb.sh \
 		-v $(CURDIR)/${ARTIFACT_BINARY_TIDB}:/out \
-		--env ROCKSDB_SYS_SSE=0 \
 		$(BUILDER_IMAGE_BINARY) /build-tidb.sh
 	cp $(ETCD_BINARY_SOURCE)/etcdctl $(ARTIFACT_BINARY_TIDB)
 
