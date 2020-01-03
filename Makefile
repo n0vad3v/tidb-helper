@@ -3,11 +3,11 @@ ifdef TAG
 endif
 
 ifeq ($(shell uname -m),aarch64)
-	ARCH="arm64" # For download
-	I_ARCH="aarch64" # For build rpm
+	ARCH=arm64 # For download
+	I_ARCH=aarch64 # For build rpm
 else
-	ARCH="amd64" # For download
-	I_ARCH="x86_64" # For build rpm
+	ARCH=amd64 # For download
+	I_ARCH=x86_64 # For build rpm
 endif
 
 PROJECT_TIDB=tidb
@@ -131,8 +131,8 @@ source-tidb-toolkit: PD_SOURCE TIDB_LIGHTNING_SOURCE TIDB_TOOLS_SOURCE TIKV_IMPO
 
 .PHONY: binary
 binary: binary-tidb binary-tidb-tookit
-binary-tidb: build-prepare source-tidb $(ARTIFACT_BINARY_TIDB)
-binary-tidb-tookit: build-prepare source-tidb-toolkit $(ARTIFACT_BINARY_TOOLKIT)
+binary-tidb: source-tidb build-prepare $(ARTIFACT_BINARY_TIDB)
+binary-tidb-tookit: source-tidb-toolkit build-prepare $(ARTIFACT_BINARY_TOOLKIT)
 
 $(ARTIFACT_DIR):
 	mkdir -p $(ARTIFACT_DIR)

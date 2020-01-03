@@ -19,10 +19,10 @@ fi
 
 # Make TiDB available on multiple arch
 pkg_arch=$2
-if [ pkg_arch = "aarch64"];then
-  docker_image_name = "arm64v8/centos:7"
+if [ "$pkg_arch" = "arm64" ];then
+  docker_image_name="arm64v8/centos:7"
 else
-  docker_image_name = "centos:7.6.1810"
+  docker_image_name="centos:7.6.1810"
 fi
 
 cat <<EOT
@@ -39,10 +39,10 @@ cat <<EOT
 RUN yum install -y tar wget git which file unzip python-pip openssl-devel \
 		make cmake3 gcc gcc-c++ libstdc++-static pkg-config psmisc gdb \
 		libdwarf-devel elfutils-libelf-devel elfutils-devel binutils-devel \
-        dwz && \
+    dwz
 EOT
 
-if [ pkg_arch = "aarch64"];then
+if [ "$pkg_arch" = "arm64" ];then
   cat <<EOT
 RUN yum makecache && \
 	yum update -y && \
