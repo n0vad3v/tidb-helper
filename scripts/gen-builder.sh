@@ -50,7 +50,7 @@ fi
 
 # Clean YUM Cache
 cat <<EOT
-yum clean all
+RUN yum clean all
 EOT
 
 # CentOS gives cmake 3 a weird binary name, so we link it to something more normal
