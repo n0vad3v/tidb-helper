@@ -17,6 +17,7 @@ if [ "$#" -ge "1" ];then
     rust_version="$1"
 fi
 
+
 # Make TiDB available on multiple arch
 pkg_arch=$2
 if [ "$pkg_arch" = "arm64" ];then
