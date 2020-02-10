@@ -35,7 +35,7 @@ GIT_URL_TIDB_CTL=$(GIT_REPO_BASE_URL)/$(ORG_PINGCAP)/$(PROJECT_TIDB_CTL)$(GIT_PO
 GIT_URL_TIDB_BINLOG=$(GIT_REPO_BASE_URL)/$(ORG_PINGCAP)/$(PROJECT_TIDB_BINLOG)$(GIT_POSTFIX)
 
 ETCD_TAG_VER=v3.3.10
-ETCD_PACKAGE_NAME=$(PROJECT_ETCD)-$(ETCD_TAG_VER)-linux-amd64
+ETCD_PACKAGE_NAME=$(PROJECT_ETCD)-$(ETCD_TAG_VER)-linux-$(ARCH)
 ETCD_TARBALL_NAME=$(ETCD_PACKAGE_NAME).tar.gz
 ETCD_V_3_3_10_BIN_URL=$(GIT_REPO_BASE_URL)/etcd-io/etcd/releases/download/$(ETCD_TAG_VER)/$(ETCD_TARBALL_NAME)
 
@@ -77,7 +77,7 @@ define fetch_source
 endef
 
 define update_source_tag
-	cd $(1) && git fetch $(2) $(3) && git checkout $(3)
+	cd $(1) && git fetch $(2) tag $(3) && git checkout $(3)
 endef
 
 $(BUILD_DIR):
