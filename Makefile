@@ -3,11 +3,15 @@ ifdef TAG
 endif
 
 ifeq ($(shell uname -m),aarch64)
-	ARCH=arm64 # For download
-	I_ARCH=aarch64 # For build rpm
+	# For download
+	ARCH=arm64
+	# For build rpm
+	I_ARCH=aarch64
 else
-	ARCH=amd64 # For download
-	I_ARCH=x86_64 # For build rpm
+	# For download
+	ARCH=amd64
+	# For build rpm
+	I_ARCH=x86_64
 endif
 
 PROJECT_TIDB=tidb
@@ -144,7 +148,7 @@ ifdef TAG
 	$(call update_source_tag, $(TIKV_SOURCE),$(GIT_URL_TIKV), $(TAG))
 	$(call update_source_tag, $(PD_SOURCE),$(GIT_URL_PD), $(TAG))
 	# always build tidb-ctl at master branch
-	$(call update_source_tag, $(TIDB_CTL_SOURCE),$(GIT_URL_TIDB_CTL), master)
+	# $(call update_source_tag, $(TIDB_CTL_SOURCE),$(GIT_URL_TIDB_CTL), master)
 	$(call update_source_tag, $(TIDB_BINLOG_SOURCE),$(GIT_URL_TIDB_BINLOG), $(TAG))
 endif
 	docker run \
